@@ -1,5 +1,6 @@
-const API_URL = 'http://localhost:3000/api/v1/beaches';
-// const API_URL = 'http://hawaiibeachsafety.com/rest/ratings.json';
+const API_URL = window.location.hostname == 'localhost' ?
+  'http://localhost:3000/api/v1/beaches' :
+  'https://islandlyfe-api.herokuapp.com/api/v1/beaches';
 
 export default {
   // async getAll() {
