@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import API from './lib/API';
+
 class App extends Component {
+  state = {
+    beaches: [],
+  }
+
+  async componentDidMount() {
+    const beaches = await API.getAll();
+    console.log(beaches);
+    this.setState({
+      beaches
+    })
+  }
   render() {
     return (
       <div>
@@ -29,6 +42,23 @@ class App extends Component {
             </div>
           </nav>
         </header>
+        <main>
+          {this.state.beaches.map(beach => {
+            return (
+              <div className="jumbotron">
+                <h1 className="display-4">{beach.beach}</h1>
+                <p>{beach.beach}, on the island of {beach.island} is located on the {beach.shore}. The current weather is {beach.weather} at {beach.temp}F with winds coming {beach.wind}</p>
+                <ul>
+                  <li>Shoreside conditions: {beach.nearshore.toUpperCase()}</li>
+                  <li>Offshore conditions: {beach.offshore.toUpperCase()}</li>
+                  <li>Surf conditions: {beach.surf.toUpperCase()}</li>
+                </ul>
+              <hr className="my-4"/>
+                <a className="btn btn-primary btn-lg" href={beach.link} target="_blank" role="button">{beach.beach} Homepage</a>
+            </div>
+            )
+          })}
+          </main>
 
       </div>
     );
